@@ -1,35 +1,39 @@
 import streamlit as st
 
-def calculate_savings(num_returns, competitor_fee, charge_per_return, overhead_costs):
-    tomahawk_cost = 1000 + min(750, num_returns * (750 / num_returns))  # Tomahawk Tax pricing cap
-    competitor_cost = num_returns * competitor_fee
-    savings = competitor_cost - tomahawk_cost
-    revenue = num_returns * charge_per_return
-    net_profit_tomahawk = revenue - (tomahawk_cost + overhead_costs)
-    net_profit_competitor = revenue - (competitor_cost + overhead_costs)
-    return tomahawk_cost, competitor_cost, savings, net_profit_tomahawk, net_profit_competitor
+import streamlit as st
 
-st.title("🔢 Tax Prep Profit & Savings Calculator")
-st.subheader("See how much you're overpaying for tax software—and how much more profit you could keep with Tomahawk Tax!")
+def calculate_savings(current_software_cost, num_returns, avg_return_fee, years, one_time_cost=989, max_annual_fee=750):
+    # Current tax software cost over time
+    total_current_cost = (current_software_cost + (num_returns * avg_return_fee)) * years
+    
+    # Tomahawk Tax cost over time
+    total_tomahawk_cost = one_time_cost + min(num_returns * avg_return_fee, max_annual_fee) * years
+    
+    # Savings
+    savings = total_current_cost - total_tomahawk_cost
+    return total_current_cost, total_tomahawk_cost, savings
 
-# User inputs
-num_returns = st.number_input("📌 Number of Returns Filed Per Year:", min_value=1, value=100)
-competitor_fee = st.number_input("💰 Competitor Software's Per-Return Fee ($):", min_value=1, value=50)
-charge_per_return = st.number_input("📊 How Much You Charge Per Return ($):", min_value=1, value=250)
-overhead_costs = st.number_input("🏢 Your Annual Overhead Costs (Office, Marketing, etc.) ($):", min_value=0, value=5000)
+# Streamlit UI
+st.title("Tomahawk Tax Savings Calculator")
+st.write("Compare your current tax software expenses with Tomahawk Tax and see how much you can save!")
 
-if st.button("💡 Calculate My Savings & Profits"):
-    tomahawk_cost, competitor_cost, savings, net_profit_tomahawk, net_profit_competitor = calculate_savings(
-        num_returns, competitor_fee, charge_per_return, overhead_costs)
+# User Inputs
+current_software_cost = st.number_input("How much do you pay yearly for your current tax software? ($)", min_value=0, value=2000)
+num_returns = st.number_input("How many returns do you file per year?", min_value=0, value=300)
+avg_return_fee = st.number_input("Average cost per return filing? ($)", min_value=0, value=5)
+years = st.number_input("How many years do you plan to continue your tax business?", min_value=1, value=5)
+
+if st.button("Calculate Savings"):
+    total_current, total_tomahawk, savings = calculate_savings(current_software_cost, num_returns, avg_return_fee, years)
     
-    st.success(f"✅ With Tomahawk Tax, your total software cost is: **${tomahawk_cost:,.2f}**")
-    st.error(f"⚠️ With Competitor Software, your total cost is: **${competitor_cost:,.2f}**")
-    st.info(f"💰 Your potential savings by switching: **${savings:,.2f} per year!**")
+    st.subheader("Your Savings Breakdown")
+    st.write(f"**Total cost with your current software:** ${total_current:,.2f}")
+    st.write(f"**Total cost with Tomahawk Tax:** ${total_tomahawk:,.2f}")
+    st.write(f"**Total savings over {years} years:** ${savings:,.2f}")
     
-    st.subheader("📈 Your Profit Comparison:")
-    st.write(f"**💵 Net Profit with Tomahawk Tax:** ${net_profit_tomahawk:,.2f}")
-    st.write(f"**💸 Net Profit with Competitor Software:** ${net_profit_competitor:,.2f}")
-    
-    st.markdown("---")
-    st.subheader("🚀 Want to See How Tomahawk Can Save You More?")
-    st.markdown("[👉 Book a Free Demo Here](#)")
+    if savings > 0:
+        st.success(f"You could save **${savings:,.2f}** over {years} years by switching to Tomahawk Tax!")
+    else:
+        st.info("Your costs might be similar, but Tomahawk Tax offers a **one-time purchase** and cost stability!")
+
+st.write("Want to learn more? [Click here](https://tomahawktax.com) to schedule a demo!")

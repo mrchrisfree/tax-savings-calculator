@@ -36,4 +36,4 @@ if st.button("Calculate Savings"):
     else:
         st.info("Your costs might be similar, but Tomahawk Tax offers a **one-time purchase** and cost stability!")
 
-st.write("Want to learn more? [Click here](https://join.tomahawktax.com/start-saving-and-growing-today) to schedule a demo!")
+st.write("Interested in big time savings with Tomahawk Tax? [Click here](https://join.tomahawktax.com/start-saving-and-growing-today) to learn more and schedule a free demo!")

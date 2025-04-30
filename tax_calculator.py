@@ -14,8 +14,11 @@ def calculate_savings(current_software_cost, num_returns, avg_return_fee, years,
     return total_current_cost, total_tomahawk_cost, savings
 
 # Streamlit UI
-st.title("Tomahawk Tax Savings Calculator - Insert Your Personalized Numbers!")
+st.title("Tomahawk Tax Savings Calculator!")
 st.write("Compare your current tax software expenses with Tomahawk Tax and see how much you can save!")
+
+st.write("Just insert your personalized numbers below")
+
 
 # User Inputs
 current_software_cost = st.number_input("How much do you pay yearly for your current tax software? ($)", min_value=0, value=2000)

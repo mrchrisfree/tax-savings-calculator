@@ -17,7 +17,7 @@ def calculate_savings(current_software_cost, num_returns, avg_return_fee, years,
 st.title("Tomahawk Tax Savings Calculator!")
 st.write("Compare your current tax software expenses with Tomahawk Tax and see how much you can save!")
 
-st.write("Just insert your personalized numbers below")
+st.write("Just insert your personalized numbers below...")
 
 
 # User Inputs

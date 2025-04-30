@@ -21,7 +21,7 @@ st.write("Just insert your personalized numbers below...")
 
 
 # User Inputs
-current_software_cost = st.number_input("How much do you pay yearly for your current tax software? ($) (Just Insert Numbers)", min_value=0, value=2000)
+current_software_cost = st.number_input("How much do you pay yearly for your current tax software? ($) (Only Insert Numbers)", min_value=0, value=2000)
 num_returns = st.number_input("How many returns do you file per year?", min_value=0, value=300)
 avg_return_fee = st.number_input("Average cost per return filing? ($)", min_value=0, value=5)
 years = st.number_input("How many years do you plan to continue your tax business?", min_value=1, value=5)
